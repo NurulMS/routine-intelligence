@@ -88,23 +88,57 @@
           </article>
         </div>
 
-        <div class="later">
-          <span class="kicker">LATER TODAY</span>
-          <article class="study-mini">
-            <div><h3>EDBA focus block</h3><p>Protected study session</p></div>
-            <strong>45 min</strong>
-          </article>
-        </div>
+      <div class="later">
+  <span class="kicker">LATER TODAY</span>
+
+  <article class="study-mini later-task" data-task="piano">
+    <div>
+      <h3>🎹 Piano Practice</h3>
+      <p>Daily practice</p>
+    </div>
+    <div>
+      <strong>15 min</strong>
+      <button class="action complete-btn">Mark complete</button>
+    </div>
+  </article>
+
+  <article class="study-mini later-task" data-task="mindfulness">
+    <div>
+      <h3>🧘 Mindfulness</h3>
+      <p>Daily mindfulness practice</p>
+    </div>
+    <div>
+      <strong>30 min</strong>
+      <button class="action complete-btn">Mark complete</button>
+    </div>
+  </article>
+
+  <article class="study-mini later-task" data-task="study">
+    <div>
+      <h3>📚 EDBA Study</h3>
+      <p>Protected study session</p>
+    </div>
+    <div>
+      <strong>45 min</strong>
+      <button class="action complete-btn">Mark complete</button>
+    </div>
+  </article>
+</div>
       </section>
 
       <section class="page" id="care">
         <div class="section-head"><div><span class="kicker">CARE</span><h2>Glow routine</h2></div></div>
         <div class="subtabs">
-          <button class="subtab active">🧴 Face</button><button class="subtab">🦵 Body</button>
-          <button class="subtab">💇 Hair & Scalp</button><button class="subtab">✈ Travel</button>
-        </div>
-        <div class="segmented"><button class="active">Morning / Day</button><button>Night</button></div>
-        <article class="routine-card">
+  <button class="subtab active" data-care="face">🧴 Face</button>
+  <button class="subtab" data-care="body">🦵 Body</button>
+  <button class="subtab" data-care="hair">💇 Hair & Scalp</button>
+  <button class="subtab" data-care="travel">✈ Travel</button>
+</div>
+       <div class="segmented">
+  <button class="active" data-period="morning">Morning / Day</button>
+  <button data-period="night">Night</button>
+</div>
+      <article class="routine-card" id="careRoutine">
           <div class="routine-title"><h3>Morning / Day</h3><span>7 steps</span></div>
           <ol class="routine-list">
             <li><b>Cleanser</b></li>
