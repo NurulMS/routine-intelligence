@@ -41,3 +41,213 @@ document.querySelectorAll(".complete-btn").forEach(b=>b.onclick=()=>{const task=
 document.getElementById("studyDone").onclick=()=>{if(state.study<5)state.study++;render()};
 document.getElementById("resetBtn").onclick=()=>{if(confirm("Reset today's check-ins?")){state={tasks:{},study:0};render()}};
 render();
+// ---------- CARE ROUTINE INTERACTIONS ----------
+
+const careRoutines = {
+  face: {
+    morning: {
+      title: "Morning / Day",
+      steps: [
+        "Cleanser",
+        "Vinoclean Toner",
+        "Centella Tone Brightening Capsule Ampoule",
+        "Centella Hyalu-Cica",
+        "Rejuran",
+        "Purito",
+        "HERA SPF"
+      ]
+    },
+    night: {
+      title: "Night",
+      steps: [
+        "Cleanser",
+        "Vinoclean Toner",
+        "Centella Hyalu-Cica",
+        "Rejuran",
+        "Purito"
+      ]
+    }
+  },
+
+  body: {
+    morning: {
+      title: "Body • Morning / Day",
+      steps: [
+        "Body routine not configured yet"
+      ]
+    },
+    night: {
+      title: "Body • Night",
+      steps: [
+        "Body routine not configured yet"
+      ]
+    }
+  },
+
+  hair: {
+    morning: {
+      title: "Hair & Scalp • Morning / Day",
+      steps: [
+        "Hair & scalp routine not configured yet"
+      ]
+    },
+    night: {
+      title: "Hair & Scalp • Night",
+      steps: [
+        "Hair & scalp routine not configured yet"
+      ]
+    }
+  },
+
+  travel: {
+    morning: {
+      title: "Travel • Morning / Day",
+      steps: [
+        "Travel routine not configured yet"
+      ]
+    },
+    night: {
+      title: "Travel • Night",
+      steps: [
+        "Travel routine not configured yet"
+      ]
+    }
+  }
+};
+
+let selectedCare = "face";
+let selectedPeriod = "morning";
+
+function renderCareRoutine() {
+  const routine = careRoutines[selectedCare][selectedPeriod];
+  const container = document.getElementById("careRoutine");
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="routine-title">
+      <h3>${routine.title}</h3>
+      <span>${routine.steps.length} ${routine.steps.length === 1 ? "step" : "steps"}</span>
+    </div>
+
+    <ol class="routine-list">
+      ${routine.steps.map(step => `
+        <li><b>${step}</b></li>
+      `).join("")}
+    </ol>
+
+    <p class="note">
+      Red + NIR stays at the beginning of Today's Flow before workout and skincare.
+    </p>
+  `;
+}
+
+document.querySelectorAll("[data-care]").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedCare = button.dataset.care;
+
+    document.querySelectorAll("[data-care]").forEach(item => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    renderCareRoutine();
+  });
+});
+
+document.querySelectorAll("[data-period]").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedPeriod = button.dataset.period;
+
+    document.querySelectorAll("[data-period]").forEach(item => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    renderCareRoutine();
+  });
+});
+
+renderCareRoutine();
+
+// ---------- LATER TODAY INTERACTIONS ----------
+
+const todayDate = new Date().toISOString().split("T")[0];
+const laterTodayKey = `routine-intelligence-${todayDate}`;
+
+function getLaterTodayState() {
+  const saved = localStorage.getItem(laterTodayKey);
+
+  if (saved) {
+    return JSON.parse(saved);
+  }
+
+  return {
+    piano: false,
+    mindfulness: false,
+    study: false
+  };
+}
+
+let laterTodayState = getLaterTodayState();
+
+function saveLaterToday() {
+  localStorage.setItem(
+    laterTodayKey,
+    JSON.stringify(laterTodayState)
+  );
+}
+
+function renderLaterToday() {
+  document.querySelectorAll(".later-task").forEach(card => {
+    const task = card.dataset.task;
+    const button = card.querySelector(".complete-btn");
+    const completed = laterTodayState[task] === true;
+
+    card.classList.toggle("done", completed);
+
+    if (button) {
+      button.textContent = completed
+        ? "✓ Completed"
+        : "Mark complete";
+    }
+  });
+
+  updateLaterTodayProgress();
+}
+
+document.querySelectorAll(".later-task .complete-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".later-task");
+    const task = card.dataset.task;
+
+    laterTodayState[task] = !laterTodayState[task];
+
+    saveLaterToday();
+    renderLaterToday();
+  });
+});
+
+function updateLaterTodayProgress() {
+  const tasks = [
+    "piano",
+    "mindfulness",
+    "study"
+  ];
+
+  const completed = tasks.filter(
+    task => laterTodayState[task]
+  ).length;
+
+  const percentage = Math.round(
+    (completed / tasks.length) * 100
+  );
+
+  const metric = document.getElementById("laterTodayProgress");
+
+  if (metric) {
+    metric.textContent = `${percentage}%`;
+  }
+}
+
+renderLaterToday();
