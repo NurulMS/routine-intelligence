@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17110f" />
+  <title>Routine Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div>
+        <div class="eyebrow">ROUTINE INTELLIGENCE</div>
+        <h1 id="greeting">Good morning</h1>
+        <p id="dateLine"></p>
+      </div>
+      <button class="icon-btn" id="resetBtn" title="Reset today's check-ins">↻</button>
+    </header>
+
+    <nav class="top-tabs" aria-label="Main navigation">
+      <button class="tab active" data-page="today">✨ Today</button>
+      <button class="tab" data-page="care">🧴 Care</button>
+      <button class="tab" data-page="training">🏋 Training</button>
+      <button class="tab" data-page="study">📚 Study</button>
+      <button class="tab" data-page="progress">◔ Progress</button>
+    </nav>
+
+    <main>
+      <section class="page active" id="today">
+        <div class="section-head">
+          <div>
+            <span class="kicker">TODAY'S FLOW</span>
+            <h2>Morning ritual</h2>
+          </div>
+          <div class="progress-ring"><span id="todayProgress">0%</span></div>
+        </div>
+
+        <div class="timeline">
+          <article class="flow-card" data-task="light">
+            <div class="step">01</div>
+            <div class="flow-body">
+              <div class="card-top"><h3>Red + NIR</h3><span class="chip device">DEVICE</span></div>
+              <p>Clean, bare, dry skin. Face + V-shape / jawline mode.</p>
+              <div class="meta"><span>10 min</span><span>Before all skincare</span></div>
+              <button class="action complete-btn">Mark complete</button>
+            </div>
+          </article>
+
+          <div class="connector">↓</div>
+
+          <article class="flow-card" data-task="workout">
+            <div class="step">02</div>
+            <div class="flow-body">
+              <div class="card-top"><h3>Workout</h3><span class="chip movement">MOVEMENT</span></div>
+              <p id="workoutSummary">Strength / Pilates programme</p>
+              <div class="meta"><span id="workoutDuration">30 min</span><span id="workoutCount">Today's session</span></div>
+              <button class="action" data-jump="training">Open workout</button>
+              <button class="action ghost complete-btn">Mark complete</button>
+            </div>
+          </article>
+
+          <div class="connector">↓</div>
+
+          <article class="flow-card" data-task="shower">
+            <div class="step">03</div>
+            <div class="flow-body">
+              <div class="card-top"><h3>Shower + reset</h3><span class="chip reset">RESET</span></div>
+              <p>Transition from training to your care routine.</p>
+              <button class="action complete-btn">Mark complete</button>
+            </div>
+          </article>
+
+          <div class="connector">↓</div>
+
+          <article class="flow-card" data-task="skin">
+            <div class="step">04</div>
+            <div class="flow-body">
+              <div class="card-top"><h3>Morning skincare</h3><span class="chip care">CARE</span></div>
+              <p>Post-workout routine. Finish with HERA SPF.</p>
+              <div class="mini-list">
+                <span>Cleanser</span><span>Vinoclean Toner</span><span>Centella Brightening Ampoule</span>
+                <span>Centella Hyalu-Cica</span><span>Rejuran</span><span>Purito</span><span>HERA SPF</span>
+              </div>
+              <button class="action" data-jump="care">Open routine</button>
+              <button class="action ghost complete-btn">Mark complete</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="later">
+          <span class="kicker">LATER TODAY</span>
+          <article class="study-mini">
+            <div><h3>EDBA focus block</h3><p>Protected study session</p></div>
+            <strong>45 min</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="care">
+        <div class="section-head"><div><span class="kicker">CARE</span><h2>Glow routine</h2></div></div>
+        <div class="subtabs">
+          <button class="subtab active">🧴 Face</button><button class="subtab">🦵 Body</button>
+          <button class="subtab">💇 Hair & Scalp</button><button class="subtab">✈ Travel</button>
+        </div>
+        <div class="segmented"><button class="active">Morning / Day</button><button>Night</button></div>
+        <article class="routine-card">
+          <div class="routine-title"><h3>Morning / Day</h3><span>7 steps</span></div>
+          <ol class="routine-list">
+            <li><b>Cleanser</b></li>
+            <li><b>Vinoclean Toner</b></li>
+            <li><b>Centella Tone Brightening Capsule Ampoule</b><small>BRIGHTENING / BOOSTING</small></li>
+            <li><b>Centella Hyalu-Cica</b></li>
+            <li><b>Rejuran</b></li>
+            <li><b>Purito</b></li>
+            <li><b>HERA SPF</b><small>SPF</small></li>
+          </ol>
+          <p class="note">Red + NIR is intentionally not repeated here: it belongs at the start of Today’s Flow, before workout and skincare.</p>
+        </article>
+      </section>
+
+      <section class="page" id="training">
+        <div class="section-head"><div><span class="kicker">TRAINING</span><h2 id="trainingTitle">Today's workout</h2></div><div class="stat" id="trainingStat"></div></div>
+        <div id="exerciseList" class="exercise-list"></div>
+      </section>
+
+      <section class="page" id="study">
+        <div class="section-head"><div><span class="kicker">STUDY</span><h2>Executive DBA</h2></div></div>
+        <article class="focus-card">
+          <span class="chip study">FOCUS</span><h3>Today's protected session</h3><div class="big-time">45 <small>min</small></div>
+          <p>Use this block for the highest-priority reading, synthesis or writing task.</p>
+          <button class="action" id="studyDone">Mark session complete</button>
+        </article>
+        <div class="week-card"><h3>This week</h3><div class="bar"><i id="studyBar"></i></div><p id="studyText">0 of 5 focus sessions completed</p></div>
+      </section>
+
+      <section class="page" id="progress">
+        <div class="section-head"><div><span class="kicker">PROGRESS</span><h2>Consistency, not noise</h2></div></div>
+        <div class="metrics">
+          <article><span>Today's flow</span><strong id="metricToday">0%</strong></article>
+          <article><span>Study this week</span><strong id="metricStudy">0/5</strong></article>
+          <article><span>Workout programme</span><strong>37</strong><small>exercise entries</small></article>
+        </div>
+        <p class="note">V1 intentionally avoids invented “AI scores”. As you log real activity, this screen can evolve into adherence, progression, RPE and routine-pattern analytics.</p>
+      </section>
+    </main>
+  </div>
+<script src="app.js"></script>
+</body>
+</html>
